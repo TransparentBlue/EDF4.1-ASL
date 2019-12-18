@@ -1,9 +1,11 @@
+//EARTH DEFENSE FORCE 4.1 The Shadow of New Despair Autosplitter v2 final
+//Special thanks to Souzooka who made the EDF5 script from which was a lot of help in making that script
+
 state("EDF41", "Steam 07/09/16 update")
 {
 	uint TotalResourcesCount : "EDF41.exe", 0x00CC84C8, 0x70;
 	uint LoadedResourcesCount : "EDF41.exe", 0x00CC84C8, 0x38, 0x10;
-	//There's several million pointers for that specific address, I don't know why and I don't care because it works and does what I want it to do, I'm not even sure what it's actually supposed to do
-	bool MysteryValue : "EDF41.exe", 0x00C87930, 0x84;
+	short MissionActive : "EDF41.exe", 0x00CC84E8, 0x28, 0x230;
 	// prevent splits on gameoverevent, also only set to > 0 when you have control of the character
 	float PlayerCurrentArmor : "EDF41.exe", 0x00CC84E8, 0x28, 0x130, 0x8, 0x16C;
 }
@@ -23,7 +25,7 @@ split
 {
 	if (settings["splits"])
 	{
-		return old.MysteryValue && !current.MysteryValue && current.PlayerCurrentArmor > 0;
+		return old.MissionActive > current.MissionActive && current.PlayerCurrentArmor > 0;
 	}
 
 	return false;
